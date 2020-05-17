@@ -3,6 +3,7 @@ import './App.css';
 import {Header, OrganizationsList} from "./components";
 import {Route} from "react-router";
 import {BrowserRouter} from "react-router-dom";
+import ClientList from "./components/client";
 
 function App() {
   return (
@@ -11,7 +12,10 @@ function App() {
           <Header />
             <div id="main">
                 <Route path="/organizations">
-                    <OrganizationsList organizations={[]}/>
+                    <OrganizationsList />
+                </Route>
+                <Route path="/clients">
+                    <ClientList />
                 </Route>
             </div>
         </div>

@@ -6,11 +6,12 @@ import {Row} from "reactstrap";
 
 interface IProps {
     organization: OrganizationModel;
+    onDelete: any;
 }
 
 interface IState {
-    isOpen: boolean
-    organization: OrganizationModel
+    isOpen: boolean;
+    organization: OrganizationModel;
 }
 
 export default class Organization extends Component<IProps, IState> {
@@ -20,6 +21,8 @@ export default class Organization extends Component<IProps, IState> {
             isOpen: false,
             organization: this.props.organization
         }
+        this.updateOrganization = this.updateOrganization.bind(this);
+        this.delete = this.delete.bind(this);
     }
     private hiddenView: JSX.Element =
         <Row id={this.props.organization.id}
@@ -35,7 +38,7 @@ export default class Organization extends Component<IProps, IState> {
                 Name: {this.props.organization.name}
             </div>
             <div className="col-4 organization__buttons">
-                <UpdateOrganization organization={this.props.organization} onOrgUpdate={this.updateOrganization.bind(this)} buttonLabel="Update"/>
+                <UpdateOrganization organization={this.props.organization} onOrgUpdate={this.updateOrganization} buttonLabel="Update"/>
                 <button onClick={this.delete.bind(this)} className="btn btn-danger">Delete</button>
             </div>
         </div>
@@ -44,7 +47,7 @@ export default class Organization extends Component<IProps, IState> {
        if (this.state.isOpen){
            return this.openView;
        }else{
-           return  this.hiddenView;
+           return this.hiddenView;
        }
     }
 
@@ -56,6 +59,6 @@ export default class Organization extends Component<IProps, IState> {
             this.setState({isOpen: !this.state.isOpen})
     }
     public delete(): void{
-        console.warn(23)
+        this.props.onDelete(this.props.organization.id)
     }
 }

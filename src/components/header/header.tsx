@@ -1,5 +1,5 @@
 import React from 'react';
-import {Nav, Navbar, NavbarBrand, NavItem} from 'reactstrap';
+import {Nav, Navbar, NavbarBrand, NavItem, NavLink} from 'reactstrap';
 import {Link} from "react-router-dom";
 
 class Header extends React.Component {
@@ -10,7 +10,10 @@ class Header extends React.Component {
                     <NavbarBrand href="/">Sup Service</NavbarBrand>
                     <Nav className="mr-auto" navbar>
                         <NavItem>
-                            <Link to="/organizations">Организации</Link>
+                            <Link className="nav-link" to="/organizations">Организации</Link>
+                        </NavItem>
+                        <NavItem>
+                            <Link className="nav-link" to="/clients">Клиенты</Link>
                         </NavItem>
                     </Nav>
                 </Navbar>
