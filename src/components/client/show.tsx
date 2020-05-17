@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import ClientModel from "../../models/Client";
 import {Row} from "reactstrap";
-import UpdateOrganization from "../organization/update";
 import UpdateClient from "./update";
 
 interface IProps {
@@ -21,7 +20,6 @@ export default class Client extends Component<IProps, IState> {
         }
         this.updateClient = this.updateClient.bind(this);
         this.delete = this.delete.bind(this);
-        // this.showView = this.showView.bind(this);
     }
 
     private hiddenView: JSX.Element =
