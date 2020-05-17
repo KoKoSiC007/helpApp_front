@@ -4,6 +4,7 @@ import {Container, Spinner} from "reactstrap";
 import Organization from "./show";
 import "./index.scss"
 import OrganizationService from "../../services/OrganizationService";
+import CreateOrganization from "./new";
 
 interface IState {
     isEmpty: boolean
@@ -31,6 +32,14 @@ export default class OrganizationsList extends React.Component<any, IState> {
         )
     }
 
+    public createHandle(model: OrganizationModel){
+        this.api.post(model).then(org => {
+            let organizations = this.state.organizations.slice();
+            organizations.push(org);
+            this.setState({organizations: organizations})
+        })
+    }
+
     public deleteHandle(id: string){
         this.api.delete(id).then(data => {
             let delIndex = this.state.organizations.findIndex(org => org.id === data);
@@ -41,10 +50,13 @@ export default class OrganizationsList extends React.Component<any, IState> {
     }
 
     private renderOrganization(): JSX.Element[] {
-        return this.state.organizations.slice().map(org => <Organization
+        let appendElement = <CreateOrganization key="new" handler={this.createHandle.bind(this)}/>
+        let elements = this.state.organizations.slice().map(org => <Organization
             organization={org}
             key={org.id}
             onDelete={this.deleteHandle.bind(this)}
         />)
+        elements = [...elements, appendElement];
+        return elements;
     }
 }

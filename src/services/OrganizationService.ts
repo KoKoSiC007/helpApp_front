@@ -21,7 +21,6 @@ export default class OrganizationService {
             },
             method: 'POST',
             body: JSON.stringify({
-                id: model.id,
                 name: model.name
             })
         }).then(res => res.json()).then( data => formatOrganization(data))
