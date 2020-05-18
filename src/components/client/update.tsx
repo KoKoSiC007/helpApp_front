@@ -66,6 +66,7 @@ export default class UpdateClient extends Component<IProps, IState> {
                         </ModalFooter>
                     </Form>
                 </Modal>
-            </div>);
+            </div>
+        );
     }
 }

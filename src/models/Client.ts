@@ -3,15 +3,18 @@ import OrganizationService from "../services/OrganizationService";
 
 export default class Client {
     api: OrganizationService = new OrganizationService();
-    id: string;
-    name: string;
-    orgId: string;
+    id: string | undefined;
+    name: string | undefined;
+    orgId: string | undefined;
     private _organization: Organization | null;
-
-    constructor(json: {id: string, name: string, orgId: string}){
-        this.id = json.id;
-        this.name = json.name;
-        this.orgId = json.orgId;
+    constructor();
+    constructor(json: {id: string, name:string, orgId: string})
+    constructor(json?: {id: string, name: string, orgId: string}){
+        if (json){
+            this.id = json.id;
+            this.name = json.name;
+            this.orgId = json.orgId;
+        }
         this._organization = null;
     }
 

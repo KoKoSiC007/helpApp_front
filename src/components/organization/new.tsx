@@ -24,7 +24,7 @@ export default class CreateOrganization extends Component<IProps, IState>{
        return (
            <div>
                <Row id="new"
-                    className="organization"
+                    className="trow"
                     onClick={this.toggle}>
                    <img src="https://img.icons8.com/android/24/000000/plus.png" alt="Добавить Организацию"/>
                </Row>

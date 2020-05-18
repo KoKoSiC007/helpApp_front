@@ -22,22 +22,21 @@ export default class Organization extends Component<IProps, IState> {
             organization: this.props.organization
         }
         this.updateOrganization = this.updateOrganization.bind(this);
-        this.delete = this.delete.bind(this);
     }
     private hiddenView: JSX.Element =
         <Row id={this.props.organization.id}
              onClick={this.showView.bind(this)}
-             className="organization">
+             className="trow">
             {this.props.organization.name}
         </Row>
     private openView : JSX.Element =
         <div onClick={this.showView.bind(this)}
-            className="organization row">
+            className="trow row">
             <div className="col-8" id={this.props.organization.id}>
                 ID: {this.props.organization.id}<br/>
                 Name: {this.props.organization.name}
             </div>
-            <div className="col-4 organization__buttons">
+            <div className="col-4 trow__buttons">
                 <UpdateOrganization organization={this.props.organization} onOrgUpdate={this.updateOrganization} buttonLabel="Update"/>
                 <button onClick={this.delete.bind(this)} className="btn btn-danger">Delete</button>
             </div>

@@ -5,6 +5,7 @@ import UpdateClient from "./update";
 
 interface IProps {
     client: ClientModel;
+    onDelete: any
 }
 interface IState {
     isOpen: boolean
@@ -25,19 +26,19 @@ export default class Client extends Component<IProps, IState> {
     private hiddenView: JSX.Element =
         <Row id={this.props.client.id}
              onClick={this.showView.bind(this)}
-             className="organization">
+             className="trow">
             {this.props.client.name}
         </Row>
     private openView : JSX.Element =
         <div onClick={this.showView.bind(this)}
-             className="organization row">
+             className="trow row">
             <div className="col-8" id={this.props.client.id}>
                 ID: {this.props.client.id}<br/>
                 Name: {this.props.client.name}
             </div>
-            <div className="col-4 organization__buttons">
+            <div className="col-4 trow__buttons">
                 <UpdateClient client={this.props.client} onOrgUpdate={this.updateClient} buttonLabel="Update"/>
-                <button onClick={this.delete} className="btn btn-danger">Delete</button>
+                <button onClick={this.delete.bind(this)} className="btn btn-danger">Delete</button>
             </div>
         </div>
 
@@ -50,12 +51,11 @@ export default class Client extends Component<IProps, IState> {
         this.setState({client: client})
     }
 
-    public delete(): void{
-        console.warn(1234)
+    public delete(): void {
+        this.props.onDelete(this.props.client.id);
     }
 
     public showView(event: any): void{
-        console.warn(this.props)
         if (event?.nativeEvent?.target?.id === this.props.client.id)
             this.setState({isOpen: !this.state.isOpen})
     }

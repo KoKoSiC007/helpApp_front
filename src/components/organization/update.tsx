@@ -46,7 +46,7 @@ export default class UpdateOrganization extends Component<IProps, IState> {
             <Modal isOpen={this.state.isOpen}
                    toggle={this.toggle}>
                 <ModalHeader>Update Organization</ModalHeader>
-                <Form inline onSubmit={this.update}>
+                <Form onSubmit={this.update}>
                     <ModalBody>
                             <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                                 <Label for={this.props.organization.id} className="mr-sm-2">Name</Label>
