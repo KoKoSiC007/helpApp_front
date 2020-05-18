@@ -4,6 +4,7 @@ import {Header, OrganizationsList} from "./components";
 import {Route} from "react-router";
 import {BrowserRouter} from "react-router-dom";
 import ClientList from "./components/client";
+import ProjectList from "./components/project";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
                 </Route>
                 <Route path="/clients">
                     <ClientList />
+                </Route>
+                <Route path="/projects">
+                    <ProjectList />
                 </Route>
             </div>
         </div>
