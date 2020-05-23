@@ -23,7 +23,7 @@ export default class ClientList extends Component<any, IState>{
             organizations: []
         }
         this.clientService.get().then( clients => this.setState({clients: clients, isEmpty: false}))
-        this.orgService.get().then( organizations => this.setState({organizations}))
+        this.orgService.get().then( organizations => organizations ? this.setState({organizations}) : null)
     }
 
     render() {
