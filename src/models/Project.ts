@@ -18,7 +18,7 @@ export default class Project {
         this._client = null;
     }
 
-    get client(){
+    get client(): Client{
         return this._client!;
     }
 

@@ -6,6 +6,7 @@ import {BrowserRouter} from "react-router-dom";
 import ClientList from "./components/client";
 import ProjectList from "./components/project";
 import Root from "./components/root";
+import TicketList from "./components/ticket";
 
 class App extends React.Component<any, { logIn: boolean} > {
     constructor(props: any) {
@@ -32,6 +33,9 @@ class App extends React.Component<any, { logIn: boolean} > {
                             </Route>
                             <Route path="/projects">
                                 <ProjectList/>
+                            </Route>
+                            <Route path="/tickets">
+                                <TicketList/>
                             </Route>
                         </Switch>
                     </div>
