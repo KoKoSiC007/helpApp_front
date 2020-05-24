@@ -53,6 +53,20 @@ export default class OrganizationService {
             method: 'DELETE',
         }).then(res => res.text());
     }
+
+    public search(word: string): Promise<Organization[]> {
+        if (word) {
+            return fetch(`${this.url}/search?data=${word}`, {headers: getHeaders()})
+                .then(res => res.json())
+                .then(data => data.map((org: { id: string, name: string }) => formatOrganization(org)))
+                .catch(error => {
+                    console.error(error);
+                    throw error;
+                });
+        }
+        else
+            return this.get();
+    }
 }
 
 function formatOrganization(data: any): Organization {

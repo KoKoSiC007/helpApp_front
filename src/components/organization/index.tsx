@@ -1,12 +1,13 @@
 import React from "react";
 import OrganizationModel from '../../models/Organization'
-import {Container, Spinner} from "reactstrap";
+import {Button, Container, Input, InputGroup, InputGroupAddon, Spinner} from "reactstrap";
 import Organization from "./show";
 import "./index.scss"
 import OrganizationService from "../../services/OrganizationService";
 import CreateOrganization from "./new";
 
 interface IState {
+    search: string
     isEmpty: boolean
     organizations: OrganizationModel[]
 }
@@ -16,6 +17,7 @@ export default class OrganizationsList extends React.Component<any, IState> {
     constructor(props: any) {
         super(props);
         this.state = {
+            search: '',
             isEmpty: true,
             organizations: []
         }
@@ -24,11 +26,21 @@ export default class OrganizationsList extends React.Component<any, IState> {
 
     render() {
         return (
-            <Container>
-                {this.state.isEmpty ?
-                    <Spinner color="primary" className="spinner"/>
-                    : this.renderOrganization()}
-            </Container>
+            <div>
+                <InputGroup>
+                    <InputGroupAddon addonType="prepend"><Button onClick={this.search.bind(this)}>Поиск</Button></InputGroupAddon>
+                    <Input onChange={this.changeHandle.bind(this)}
+                           value={this.state.search}
+                           onKeyPress={this.enterHandler.bind(this)}
+                           placeholder="Введите что нибуть"
+                    />
+                </InputGroup>
+                <Container>
+                    {this.state.isEmpty ?
+                        <Spinner color="primary" className="spinner"/>
+                        : this.renderOrganization()}
+                </Container>
+            </div>
         )
     }
 
@@ -47,6 +59,20 @@ export default class OrganizationsList extends React.Component<any, IState> {
             newOrgs.splice(delIndex,1 )
             this.setState({organizations: newOrgs})
         })
+    }
+
+    private changeHandle(event: any){
+        this.setState({search: event.target.value});
+    }
+
+    private enterHandler(event: any){
+        if (event.key == 'Enter'){
+            this.search();
+        }
+    }
+
+    private search(){
+        this.api.search(this.state.search).then( organizations => this.setState({organizations}))
     }
 
     private renderOrganization(): JSX.Element[] {

@@ -7,7 +7,7 @@ export default class ProjectService {
     public get(): Promise<Project[]>{
         return fetch(this.url, {headers: getHeaders()})
             .then(res => res.json())
-            .then(data => data.map((org: Project) => formatClient(org)))
+            .then(data => data.map((org: Project) => formatProject(org)))
     }
     public put(model: Project): Promise<Project>{
         return fetch(`${this.url}/${model.id}`, {
@@ -18,7 +18,7 @@ export default class ProjectService {
                 name: model.name,
                 clientId: model.clientId
             })
-        }).then(res => res.json()).then(data => formatClient(data))
+        }).then(res => res.json()).then(data => formatProject(data))
     }
     public post(model: Project): Promise<Project|void>{
         return fetch(`${this.url}`, {
@@ -28,7 +28,7 @@ export default class ProjectService {
                 name: model.name,
                 clientId: model.clientId
             })
-        }).then(res => res.json()).then(data => formatClient(data)).catch(error => console.error(error));
+        }).then(res => res.json()).then(data => formatProject(data)).catch(error => console.error(error));
     }
     public delete(id: string): Promise<string>{
         return fetch(`${this.url}/${id}`, {
@@ -36,8 +36,22 @@ export default class ProjectService {
             method: 'DELETE'
         }).then(res => res.text());
     }
+
+    public search(word: string): Promise<Project[]> {
+        if (word) {
+            return fetch(`${this.url}/search?data=${word}`, {headers: getHeaders()})
+                .then(res => res.json())
+                .then(data => data.map((org: { id: string, name: string }) => formatProject(org)))
+                .catch(error => {
+                    console.error(error);
+                    throw error;
+                });
+        }
+        else
+            return this.get();
+    }
 }
 
-function formatClient(data: any): Project {
+function formatProject(data: any): Project {
     return new Project({id: data.id, name: data.name, clientId: data.clientId})
 }

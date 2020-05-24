@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Container, Spinner} from "reactstrap";
+import {Button, Container, Input, InputGroup, InputGroupAddon, Spinner} from "reactstrap";
 import ProjectService from "../../services/ProjectService";
 import ProjectModel from "../../models/Project";
 import Client from "../../models/Client";
@@ -7,6 +7,7 @@ import ClientService from "../../services/ClientService";
 import Project from "./show";
 import CreateProject from "./new";
 interface IState {
+    search: string,
     isEmpty: boolean,
     projects: ProjectModel[],
     clients: Client[]
@@ -18,6 +19,7 @@ export default class ProjectList extends Component<any, IState>{
     constructor(props: any) {
         super(props);
         this.state = {
+            search: '',
             isEmpty: true,
             projects: [],
             clients: []
@@ -28,11 +30,21 @@ export default class ProjectList extends Component<any, IState>{
 
     render() {
         return (
-            <Container>
-                {this.state.isEmpty ?
-                    <Spinner color="primary" className="spinner"/>
-                    : this.renderProjects()}
-            </Container>
+            <div>
+                <InputGroup>
+                    <InputGroupAddon addonType="prepend"><Button onClick={this.search.bind(this)}>Поиск</Button></InputGroupAddon>
+                    <Input onChange={this.changeHandle.bind(this)}
+                           value={this.state.search}
+                           onKeyPress={this.enterHandler.bind(this)}
+                           placeholder="Введите что нибуть"
+                    />
+                </InputGroup>
+                <Container>
+                    {this.state.isEmpty ?
+                        <Spinner color="primary" className="spinner"/>
+                        : this.renderProjects()}
+                </Container>
+            </div>
         );
     }
 
@@ -52,6 +64,19 @@ export default class ProjectList extends Component<any, IState>{
             newProjects.splice(delIndex,1 )
             this.setState({projects: newProjects})
         })
+    }
+    private changeHandle(event: any){
+        this.setState({search: event.target.value});
+    }
+
+    private enterHandler(event: any){
+        if (event.key == 'Enter'){
+            this.search();
+        }
+    }
+
+    private search(){
+        this.projectService.search(this.state.search).then( projects => this.setState({projects}))
     }
     private renderProjects(): JSX.Element[] {
         let appendElement = <CreateProject key="new" clients={this.state.clients} handler={this.createHandle.bind(this)}/>
