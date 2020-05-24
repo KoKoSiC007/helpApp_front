@@ -25,6 +25,9 @@ class Header extends React.Component<IProps, any> {
                 <Link className="nav-link" to="/tickets">Тикеты</Link>
             </NavItem>
             <NavItem>
+                <Link className="nav-link" to="/messages">Сообщения</Link>
+            </NavItem>
+            <NavItem>
                 <Button className="nav-link" onClick={this.logOut.bind(this)}>Выйти</Button>
             </NavItem>
         </Nav>

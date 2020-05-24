@@ -7,6 +7,7 @@ import ClientList from "./components/client";
 import ProjectList from "./components/project";
 import Root from "./components/root";
 import TicketList from "./components/ticket";
+import MessageList from "./components/message";
 
 class App extends React.Component<any, { logIn: boolean} > {
     constructor(props: any) {
@@ -36,6 +37,9 @@ class App extends React.Component<any, { logIn: boolean} > {
                             </Route>
                             <Route path="/tickets">
                                 <TicketList/>
+                            </Route>
+                            <Route path="/messages">
+                                <MessageList/>
                             </Route>
                         </Switch>
                     </div>
