@@ -8,6 +8,10 @@ export default class ProjectService {
         return fetch(this.url, {headers: getHeaders()})
             .then(res => res.json())
             .then(data => data.map((org: Project) => formatProject(org)))
+            .catch(error => {
+                console.warn(error);
+                throw error;
+            })
     }
     public put(model: Project): Promise<Project>{
         return fetch(`${this.url}/${model.id}`, {

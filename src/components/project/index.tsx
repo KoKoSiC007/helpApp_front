@@ -70,7 +70,7 @@ export default class ProjectList extends Component<any, IState>{
     }
 
     private enterHandler(event: any){
-        if (event.key == 'Enter'){
+        if (event.key === 'Enter'){
             this.search();
         }
     }

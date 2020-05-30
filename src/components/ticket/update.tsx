@@ -54,10 +54,10 @@ export default class UpdateTicket extends Component<IProps, IState> {
                             <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                                 <Label for={this.props.ticket.id} className="mr-sm-2">Name</Label>
                                 <Input type="text"
-                                       name="Name"
+                                       name="Description"
                                        id={this.props.ticket.id}
                                        defaultValue={this.props.ticket.description}
-                                       onDescriptionChange={this.onDescriptionChange}/>
+                                       onChange={this.onDescriptionChange}/>
                             </FormGroup>
                         </ModalBody>
                         <ModalFooter>

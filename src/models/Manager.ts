@@ -39,4 +39,7 @@ export default class Manager {
         this._messages = null;
         this._projects = null;
     }
+    get fullname(): string{
+        return `${this.fname} ${this.lname}`;
+    }
 }

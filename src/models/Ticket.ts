@@ -6,7 +6,7 @@ export default class Ticket{
     description: string| undefined;
     created_at: Date| undefined;
     projectId: string| undefined;
-    managerId: string| undefined;
+    managerId: string| null;
     private _project: Project| null;
     private _manager: Manager| null;
     constructor();
@@ -22,6 +22,7 @@ export default class Ticket{
         projectId: string,
         managerId: string,
     }){
+        this.managerId = null;
         if (json){
             this.id = json.id;
             this.description = json.description;

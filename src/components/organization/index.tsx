@@ -66,7 +66,7 @@ export default class OrganizationsList extends React.Component<any, IState> {
     }
 
     private enterHandler(event: any){
-        if (event.key == 'Enter'){
+        if (event.key === 'Enter'){
             this.search();
         }
     }

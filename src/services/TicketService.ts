@@ -1,5 +1,7 @@
 import Ticket from "../models/Ticket";
 import getHeaders from "../helpers/getHeaders";
+import Manager from "../models/Manager";
+import {formatManager} from "./ManagerService";
 
 export default class TicketService {
     private url: string = 'http://localhost:5000/api/ticket'
@@ -8,8 +10,13 @@ export default class TicketService {
         return fetch(this.url, {headers: getHeaders()})
             .then(res => res.json())
             .then(data => data.map((ticket: Ticket) => formatTicket(ticket)))
+            .catch(error => {
+                console.warn(error);
+                throw error;
+            })
     }
     public put(model: Ticket): Promise<Ticket>{
+        console.warn(model);
         return fetch(`${this.url}/${model.id}`, {
             headers: getHeaders(),
             method: 'PUT',
@@ -19,7 +26,13 @@ export default class TicketService {
                 projectId: model.projectId,
                 managerId: model.managerId
             })
-        }).then(res => res.json()).then(data => formatTicket(data))
+        })
+            .then(res => res.json())
+            .then(data => formatTicket(data))
+            .catch(error => {
+                console.error(error);
+                throw error;
+            })
     }
     public post(model: Ticket): Promise<Ticket|void>{
         return fetch(`${this.url}`, {
@@ -30,7 +43,13 @@ export default class TicketService {
                 projectId: model.projectId,
                 managerId: model.managerId
             })
-        }).then(res => res.json()).then(data => formatTicket(data)).catch(error => console.error(error));
+        })
+            .then(res => res.json())
+            .then(data => formatTicket(data))
+            .catch(error => {
+                console.error(error);
+                throw error;
+            });
     }
     public delete(id: string): Promise<string>{
         return fetch(`${this.url}/${id}`, {
@@ -38,7 +57,6 @@ export default class TicketService {
             method: 'DELETE'
         }).then(res => res.text());
     }
-
     public search(word: string): Promise<Ticket[]> {
         if (word) {
             return fetch(`${this.url}/search?data=${word}`, {headers: getHeaders()})
@@ -52,8 +70,18 @@ export default class TicketService {
         else
             return this.get();
     }
+    public getManager(id: string | undefined): Promise<Manager>{
+        return fetch(`${this.url}/${id}/manager`, {headers: getHeaders()})
+            .then(res => res.json())
+            .then(data => formatManager(data))
+    }
 }
 
 function formatTicket(data: any): Ticket {
-    return new Ticket({id: data.id, projectId: data.projectId, managerId: data.managerId, description: data.description})
+    return new Ticket({
+        id: data.id,
+        projectId: data.projectId,
+        managerId: data.managerId,
+        description: data.description
+    })
 }

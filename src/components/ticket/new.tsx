@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row} from "reactstrap";
 import Ticket from "../../models/Ticket";
 import Project from "../../models/Project";
+import Manager from "../../models/Manager";
 interface IProps {
     handler?: any
     projects: Project[]
+    managers: Manager[]
 }
 interface IState {
     isOpen: boolean
@@ -15,8 +17,8 @@ export default class CreateTicket extends Component<IProps, IState>{
     constructor(props: any) {
         super(props);
         let ticket = new Ticket();
-        if (props.projects[0])
-            ticket.projectId = props.projects[0].id
+        if (this.props.projects[0]) ticket.projectId = props.projects[0].id;
+        if (this.props.managers[0]) ticket.managerId = props.managers[0].id;
         this.state = {
             isOpen: false,
             ticket: ticket
@@ -25,9 +27,13 @@ export default class CreateTicket extends Component<IProps, IState>{
     }
 
     render() {
-        let options = []
+        let projectOptions = [];
+        let managerOptions = [];
         for (let project of this.props.projects){
-            options.push(<option key={project.id} value={project.id}>{project.name}</option>)
+            projectOptions.push(<option key={project.id} value={project.id}>{project.name}</option>)
+        }
+        for (let manager of this.props.managers){
+            managerOptions.push(<option key={manager.id} value={manager.id}>{manager.fullname}</option>)
         }
         return (
             <div>
@@ -51,8 +57,14 @@ export default class CreateTicket extends Component<IProps, IState>{
                             </FormGroup>
                             <FormGroup style={{"margin": "10px", "width": "none"}}>
                                 <Label className="mr-sm-2">Проект</Label>
-                                <Input type="select" name="orgId" onChange={this.onChangeProjectId.bind(this)}>
-                                    {options}
+                                <Input type="select" name="projectId" onChange={this.onChangeProjectId.bind(this)}>
+                                    {projectOptions}
+                                </Input>
+                            </FormGroup>
+                            <FormGroup style={{"margin": "10px", "width": "none"}}>
+                                <Label className="mr-sm-2">Менеджер</Label>
+                                <Input type="select" name="managerId" onChange={this.onChangeManagerId.bind(this)}>
+                                    {managerOptions}
                                 </Input>
                             </FormGroup>
                         </ModalBody>
@@ -81,6 +93,12 @@ export default class CreateTicket extends Component<IProps, IState>{
         event.preventDefault();
         let ticket= Object.assign(this.state.ticket);
         ticket.projectId = event.target.value
+        this.setState({ticket: ticket});
+    }
+    private onChangeManagerId(event: any){
+        event.preventDefault();
+        let ticket = Object.assign(this.state.ticket);
+        ticket.managerId = event.target.value
         this.setState({ticket: ticket});
     }
     public toggle(){
