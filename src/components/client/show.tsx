@@ -34,7 +34,8 @@ export default class Client extends Component<IProps, IState> {
              className="trow row">
             <div className="col-8" id={this.props.client.id}>
                 ID: {this.props.client.id}<br/>
-                Name: {this.props.client.name}
+                Name: {this.props.client.name}<br/>
+                OrgID: {this.props.client.orgId}
             </div>
             <div className="col-4 trow__buttons">
                 <UpdateClient client={this.props.client} onOrgUpdate={this.updateClient} buttonLabel="Update"/>

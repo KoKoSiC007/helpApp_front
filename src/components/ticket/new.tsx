@@ -70,7 +70,7 @@ export default class CreateTicket extends Component<IProps, IState>{
                         </ModalBody>
                         <ModalFooter>
                             <Button color="primary" type="submit">Create</Button>
-                            <Button color="secondary">Cancel</Button>
+                            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Form>
                 </Modal>

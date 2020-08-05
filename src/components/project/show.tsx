@@ -2,10 +2,12 @@ import React, {Component} from 'react'
 import {Row} from "reactstrap";
 import UpdateProject from "./update";
 import ProjectModel from "../../models/Project";
+import Client from "../../models/Client";
 
 interface IProps {
     project: ProjectModel;
-    onDelete: any
+    onDelete: any;
+    clients: Client[];
 }
 interface IState {
     isOpen: boolean
@@ -23,28 +25,25 @@ export default class Project extends Component<IProps, IState> {
         this.delete = this.delete.bind(this);
     }
 
-    private hiddenView: JSX.Element =
-        <Row id={this.props.project.id}
-             onClick={this.showView.bind(this)}
-             className="trow">
-            {this.props.project.name}
-        </Row>
-    private openView : JSX.Element =
-        <div onClick={this.showView.bind(this)}
-             className="trow row">
-            <div className="col-8" id={this.props.project.id}>
-                ID: {this.props.project.id}<br/>
-                Name: {this.props.project.name}
-            </div>
-            <div className="col-4 trow__buttons">
-                <UpdateProject project={this.props.project} onUpdate={this.updateProject} buttonLabel="Update"/>
-                <button onClick={this.delete.bind(this)} className="btn btn-danger">Delete</button>
-            </div>
-        </div>
 
     render() {
-        if (this.state.isOpen) return  this.openView
-        else return this.hiddenView;
+        if (this.state.isOpen) return  (<div onClick={this.showView.bind(this)}
+                                             className="trow row">
+            <div className="col-8" id={this.props.project.id}>
+                ID: {this.props.project.id}<br/>
+                Name: {this.props.project.name}<br/>
+                ClientId: {this.props.project.clientId}
+            </div>
+            <div className="col-4 trow__buttons">
+                <UpdateProject project={this.props.project} clients={this.props.clients} onUpdate={this.updateProject} buttonLabel="Update"/>
+                <button onClick={this.delete.bind(this)} className="btn btn-danger">Delete</button>
+            </div>
+        </div>)
+        else return (<Row id={this.props.project.id}
+                          onClick={this.showView.bind(this)}
+                          className="trow">
+            {this.props.project.name}
+        </Row>);
     }
 
     public updateProject(project: ProjectModel){

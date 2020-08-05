@@ -57,5 +57,5 @@ export default class ProjectService {
 }
 
 function formatProject(data: any): Project {
-    return new Project({id: data.id, name: data.name, clientId: data.clientId})
+    return new Project({id: data.id, name: data.name, clientId: data.clientID})
 }

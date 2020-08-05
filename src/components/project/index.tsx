@@ -24,6 +24,8 @@ export default class ProjectList extends Component<any, IState>{
             projects: [],
             clients: []
         }
+    }
+    componentDidMount() {
         this.projectService.get().then(projects => this.setState({projects: projects, isEmpty: false}));
         this.clientService.get().then(clients => this.setState({clients: clients}));
     }
@@ -80,7 +82,7 @@ export default class ProjectList extends Component<any, IState>{
     }
     private renderProjects(): JSX.Element[] {
         let appendElement = <CreateProject key="new" clients={this.state.clients} handler={this.createHandle.bind(this)}/>
-        let elements = this.state.projects.slice().map(project => <Project onDelete={this.deleteHandle.bind(this)} project={project} key={project.id}/>)
+        let elements = this.state.projects.slice().map(project => <Project clients={this.state.clients} onDelete={this.deleteHandle.bind(this)} project={project} key={project.id}/>)
         return [...elements, appendElement]
     }
 }

@@ -18,7 +18,9 @@ export default class ClientService {
                 name: model.name,
                 orgId: model.orgId
             })
-        }).then(res => res.json()).then(data => formatClient(data))
+        })
+            .then(res => res.json())
+            .then(data => formatClient(data))
     }
     public post(model: Client): Promise<Client|void>{
         return fetch(`${this.url}`, {
@@ -28,7 +30,13 @@ export default class ClientService {
                 name: model.name,
                 orgId: model.orgId
             })
-        }).then(res => res.json()).then(data => formatClient(data)).catch(error => console.error(error));
+        })
+            .then(res => res.json())
+            .then(data => formatClient(data))
+            .catch(error => {
+                console.error(error);
+                throw error;
+            });
     }
     public delete(id: string): Promise<string>{
         return fetch(`${this.url}/${id}`, {
@@ -56,6 +64,6 @@ function formatClient(data: any): Client {
     return new Client({
         id: data.id,
         name: data.name,
-        orgId: data.orgId
+        orgId: data.orgID
     })
 }

@@ -2,11 +2,13 @@ import React, {Component} from "react";
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import Project from "../../models/Project";
 import ProjectService from "../../services/ProjectService";
+import Client from "../../models/Client";
 
 interface IProps {
     project: Project,
     buttonLabel: string,
-    onUpdate: any
+    onUpdate: any,
+    clients: Client[]
 }
 
 interface IState {
@@ -43,6 +45,10 @@ export default class UpdateProject extends Component<IProps, IState> {
     }
 
     render() {
+        let options = []
+        for (let client of this.props.clients){
+            options.push(<option key={client.id} value={client.id}>{client.name}</option>)
+        }
         return (
             <div>
                 <Button color="primary" onClick={this.toggle}>{this.props.buttonLabel}</Button>
